@@ -67,7 +67,7 @@ const CATEGORY_THEMES: Record<string, {
     },
     [Category.RETURN_GIFTS]: {
         title: "The Perfect Takeaway.",
-        tagline: "Memorable Bulk Gifts",
+        tagline: "Memorable Gifts",
         description: "Say goodbye to plastic junk. Give your guests a DIY kit they'll actually cherish. Our return gift options are customizable and budget-friendly.",
         bgColor: "bg-[#FAF5FF]", // Soft Purple
         accentColor: "text-[#805AD5]",

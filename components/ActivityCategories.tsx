@@ -118,7 +118,6 @@ const ActivityCategories: React.FC<ActivityCategoriesProps> = ({ onCategoryClick
                    <div className="relative z-10 flex items-end justify-between gap-3">
                        <div>
                            <h3 className="text-2xl md:text-3xl font-quirky font-bold text-art-text mb-2">Return Gift<br/>Options</h3>
-                           <p className="text-sm font-sans text-art-text/85 font-bold">Bulk orders & custom kits</p>
                        </div>
                        <div className="relative w-28 h-40 sm:w-36 sm:h-52 bg-white rounded-xl border-2 border-art-text overflow-hidden group-hover:rotate-1 transition-transform shadow-md flex-shrink-0">
                            <img src="/return-gift/return24.webp" width={720} height={1080} className="w-full h-full object-cover" alt="Return Gifts"/>

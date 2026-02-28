@@ -104,7 +104,7 @@ const QuoteForm: React.FC = () => {
           </div>
 
           <form onSubmit={handleSubmit} className="text-2xl md:text-4xl font-serif leading-relaxed text-white/90 space-y-2">
-            <span>Hi Artistry! My name is </span>
+            <span>Hi Sonam! My name is </span>
             <div className="inline-block relative min-w-[200px] border-b-2 border-art-green mx-2">
               <input
                 type="text"
@@ -132,8 +132,6 @@ const QuoteForm: React.FC = () => {
                 <option value="Kids Art Party">Kids Art Party</option>
                 <option value="Resin Workshop">Resin Workshop</option>
                 <option value="Corporate Event">Corporate Event</option>
-                <option value="Gift Hamper Order">Gift Hamper Order</option>
-                <option value="Return Gifts Bulk">Return Gifts Bulk</option>
               </select>
             </div>
             <span> for roughly </span>
