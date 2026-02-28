@@ -166,8 +166,8 @@ const Gallery: React.FC = () => {
 
       </div>
       
-      <div className="text-center mt-16 md:hidden">
-         <a href="https://www.instagram.com/artistrybysonamgupta/" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-art-text font-bold border-b-2 border-art-text pb-1 hover:text-art-green hover:border-art-green transition-colors">
+      <div className="text-center mt-16 md:hidden relative z-20">
+         <a href="https://www.instagram.com/artistrybysonamgupta/" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-art-text font-bold border-b-2 border-art-text pb-1 hover:text-art-green hover:border-art-green transition-colors pointer-events-auto">
             <Camera size={20}/> See more on Instagram <ArrowRight size={16}/>
          </a>
       </div>
