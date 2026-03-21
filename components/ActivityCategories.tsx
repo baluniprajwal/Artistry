@@ -86,7 +86,7 @@ const ActivityCategories: React.FC<ActivityCategoriesProps> = ({ onCategoryClick
                        <ArrowUpRight size={28} className="opacity-0 group-hover:opacity-100 transition-opacity translate-x-2 group-hover:translate-x-0"/>
                    </div>
                    <h3 className="text-3xl md:text-4xl font-quirky font-bold text-art-text mt-auto leading-tight">Gift<br/>Hampers</h3>
-                   <img src="/hampers/hamper10.webp" width={400} height={400} className="absolute -right-4 -bottom-4 md:-right-8 md:-bottom-8 w-36 h-36 md:w-48 md:h-48 object-cover rounded-full border-2 border-art-text group-hover:scale-110 transition-transform shadow-md" alt="Hampers"/>
+                   <img src="/hampers/hamper10.webp" width={400} height={400} className="absolute right-4 bottom-4 md:right-5 md:bottom-5 w-40 h-40 md:w-52 md:h-52 object-cover rounded-2xl border-2 border-art-text group-hover:scale-105 transition-transform shadow-md" alt="Hampers"/>
                </div>
 
                {/* 4. Corporate / Adults (Span 4) */}

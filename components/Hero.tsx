@@ -41,7 +41,7 @@ const Hero: React.FC<HeroProps> = ({ onCtaClick, onExploreClick }) => {
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
                 </span>
                 <span className="font-sans font-bold uppercase tracking-[0.2em] text-[10px] text-art-text">
-                  Est. 2024 • New Delhi
+                  Est. 2018 • New Delhi
                 </span>
               </div>
 
@@ -204,7 +204,7 @@ const Hero: React.FC<HeroProps> = ({ onCtaClick, onExploreClick }) => {
                     letterSpacing="1.5"
                     fontFamily="Fredoka"
                   >
-                    <textPath href="#circle">• EST 2024 • ARTISTRY • NEW DELHI</textPath>
+                    <textPath href="#circle">• EST 2018 • ARTISTRY • NEW DELHI</textPath>
                   </text>
                 </svg>
               </div>

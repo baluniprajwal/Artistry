@@ -29,12 +29,8 @@ export const CORPORATE_ADULT_GALLERY_IMAGES: string[] = [
   '/Corporate-adults/corporate5.webp',
   '/Corporate-adults/corporate6.webp',
   '/Corporate-adults/corporate7.webp',
-  '/Corporate-adults/corporate8.webp',
   '/Corporate-adults/corporate9.webp',
   '/Corporate-adults/corporate10.webp',
-  '/Corporate-adults/corporate11.webp',
-  '/Corporate-adults/corporate12.webp',
-  '/Corporate-adults/corporate13.webp',
   '/Corporate-adults/corporate14.webp',
   '/Corporate-adults/corporate15.webp',
   '/Corporate-adults/corporate16.webp',
@@ -45,15 +41,10 @@ export const CORPORATE_ADULT_GALLERY_IMAGES: string[] = [
   '/Corporate-adults/corporate21.webp',
   '/Corporate-adults/corporate22.webp',
   '/Corporate-adults/corporate23.webp',
-  '/Corporate-adults/corporate24.webp',
-  '/Corporate-adults/corporate25.webp',
   '/Corporate-adults/corporate26.webp',
-  '/Corporate-adults/corporate27.webp',
   '/Corporate-adults/corporate28.webp',
-  '/Corporate-adults/corporate29.webp',
   '/Corporate-adults/corporate30.webp',
   '/Corporate-adults/corporate31.webp',
-  '/Corporate-adults/corporate32.webp',
 ];
 
 export const RETURN_GIFT_GALLERY_IMAGES: string[] = [
@@ -125,63 +116,204 @@ export const WORKSHOPS: Workshop[] = [
   {
     id: 'monogram-art',
     title: 'Monogram Art',
-    description: 'Bring creativity, colour, and personal expression together with our Monogram Decorating art station. Each participant gets an MDF initial cutout and transforms it into a decorative piece using paints, stones, crystals, pearls, and embellishments. Guests layer textures, colours, and patterns to turn a simple letter into personalised decor. The process is easy, guided, mess-controlled, and enjoyable for kids, teens, and adults. Perfect for birthday parties, school workshops, exhibitions, festive celebrations, and corporate events. Everyone takes home a meaningful monogram keepsake that reflects their style.',
+    description: `Bring creativity, colour, and personal expression together with our Monogram Decorating art station. In this engaging activity, every participant receives an MDF cutout of their initial and transforms it into a stunning decorative piece using paints, stones, crystals, pearls, and embellishments.
+
+Guests explore textures, colours, and patterns as they layer their design onto the wooden base, turning a simple letter into a personalised work of art. The process is easy to follow, mess-controlled, and suitable for kids, teens, and adults, making it a versatile favourite for all kinds of events.
+
+Whether it's a birthday party, school workshop, exhibition, festive celebration, or corporate event, this activity offers a perfect blend of creativity, relaxation, and accomplishment. And the best part? Everyone takes home a beautiful monogram decor piece that proudly reflects their style.
+
+Creative. Personal. Decorative.
+An artistic experience that turns initials into keepsakes.
+
+Why Guests Love This Activity
+Personalised MDF initial for every participant
+Wide range of paints, stones, crystals, and pearls to decorate with
+Easy, guided, and enjoyable for all age groups
+Mess-free setup ideal for events and gatherings
+A meaningful decor item to take home`,
     image: '/Kids-art/monogram.webp',
     categories: [Category.KIDS, Category.CORPORATE_ADULT, Category.RETURN_GIFTS]
   },
   {
     id: 'build-a-bear',
     title: 'Build-A-Bear Workshop',
-    description: 'Let little hands create big cuddles. In this Build-A-Bear workshop for kids, children choose a soft toy, fill and fluff it, customise it with patches, decorate the teddy tee, and take home a handmade keepsake. A safe, fun, and fully customisable teddy bear making activity ideal for birthday parties, kids workshops, and events (up to 10 years).',
+    description: `Build-A-Bear Workshop for Kids (Up to 12 Years)
+
+Let little hands create big cuddles! Our Build-A-Bear workshop for kids is a joyful, hands-on activity where children design their very own soft toy from start to finish.
+
+Kids begin by choosing their favourite teddy bear or soft toy from our adorable collection. Next comes the fun part - stuffing the cotton, fluffing it up, and bringing their furry friend to life.
+
+The creativity does not stop there. Children can customise their teddy bear with colourful patches, receive a personalised birth certificate, and even paint or decorate the teddy's tee. Every bear becomes one-of-a-kind, just like its creator.
+
+Perfect for boys and girls up to 10 years, this DIY teddy bear making activity can also be customised to match party themes, events, or workshops.
+
+Best part? Once the workshop ends, kids get to take their handmade teddy bear home - a cuddly keepsake filled with memories and pride.
+
+Why Kids (and Parents) Love It
+Hands-on creative activity for kids
+Encourages imagination, fine motor skills and confidence
+Ideal for birthday parties, kids workshops and events
+Fully customisable Build-A-Bear experience
+Safe, fun, and unforgettable!`,
     image: '/Kids-art/buildabear.webp',
     categories: [Category.KIDS, Category.RETURN_GIFTS]
   },
   {
     id: 'diy-sipper',
     title: 'Sipper Sticker Station',
-    description: 'Looking for a unique, engaging, and mess-free activity for all ages? Our Sipper Sticker Station is an interactive DIY experience where guests choose their own sipper or tumbler and personalise it using vibrant themed stickers. Guests pick a sipper, browse sticker options, peel and paste, and walk away with a one-of-a-kind personalised keepsake. No paint, no glue, no mess - just creativity and fun. Suitable for kids, teens, and adults, this station encourages self-expression, keeps guests engaged, and works beautifully at birthday parties, school events, exhibitions, weddings, corporate events, and family gatherings.',
+    description: `Sipper Sticker Station - A Fun Customisation Activity for All Ages
+
+Looking for a unique, engaging, and mess-free activity that delights both kids and adults at your event?
+
+Our Sipper Sticker Station is an interactive DIY experience where guests can choose their own sipper or tumbler and personalise it using a wide variety of vibrant, themed stickers.
+
+From kids' parties to corporate events, this station becomes an instant crowd favourite - creative, hands-on, and something guests get to take home as a personalised keepsake.
+
+How It Works
+Guests pick a sipper or tumbler of their choice.
+Browse through our huge collection of fun, themed stickers.
+Peel, paste, design, and customise your own sipper just the way you like it.
+Walk away with a one-of-a-kind personalised sipper.
+No paint. No glue. No mess. Just pure creativity and fun.
+
+Why Everyone Loves the Sipper Sticker Station
+Suitable for kids, teens, and adults
+Encourages creativity and self-expression
+Completely mess-free and safe
+A perfect return gift or takeaway
+Keeps guests engaged for long durations
+Works beautifully at birthday parties, school events, exhibitions, weddings, corporate events, and family gatherings`,
     image: '/Kids-art/sipper.webp',
     categories: [Category.KIDS, Category.RETURN_GIFTS, Category.CORPORATE_ADULT]
   },
   {
     id: 'bag-painting',
     title: 'Fanny Pouch Patches Workshop',
-    description: 'Looking for a fun, hands-on activity that everyone can enjoy? Fanny Pouch Patches is an exciting, budget-friendly station where guests design their own trendy fanny pouch. Participants pick from vibrant pouch colours and customise with easy heat-and-press patches, from quirky icons and cute characters to funky symbols and stylish motifs. In minutes, guests of all ages create a personalised accessory they will actually use. This engaging, creative, and mess-free activity is perfect for parties, workshops, school events, and corporate gatherings. Creative. Interactive. Personal. A fun experience and stylish takeaway in one.',
+    description: `Looking for a fun, hands-on activity that everyone can enjoy? Fanny Pouch Patches is an exciting, budget-friendly station where guests design their very own trendy fanny pouch.
+
+Participants can pick from a variety of vibrant fanny bag colours and explore our wide range of easy press-on patches - from quirky icons and cute characters to funky symbols and stylish motifs. With simple Heat-and-Press application, guests of all ages can customise their pouch in minutes and take home a personalised accessory they'll actually use.
+
+Perfect for kids, teens, and adults, this activity is engaging, creative, and mess-free, making it a great addition to parties, workshops, school events, and corporate gatherings.
+
+Creative. Interactive. Personal.
+A fun experience and a stylish takeaway - all in one!`,
     image: '/Kids-art/fannypouch.webp',
     categories: [Category.KIDS, Category.RETURN_GIFTS, Category.CORPORATE_ADULT]
   },
   {
     id: 'jacket-press',
     title: 'Jacket Printing Workshop',
-    description: 'Turn creativity into wearable fashion. In this hands-on station, guests choose a denim jacket or hoodie, select colourful press-on patches, and use fabric paints, stencils, or prints to design a one-of-a-kind piece. It is an engaging, mess-controlled activity for all ages and a premium take-home keepsake, perfect for birthday parties, school and college events, exhibitions, and corporate gatherings.',
+    description: `Turn creativity into wearable fashion with our Jacket Printing and Painting activity station. Guests of all ages can choose their preferred denim jacket or hoodie, pick from our range of colourful, quirky press-on patches, and use fabric paints, stencils, or prints to design a one-of-a-kind masterpiece.
+
+This hands-on, mess-controlled setup lets participants explore their artistic side while creating a personalised jacket they'll proudly wear. From playful designs to bold statements, every piece becomes a unique expression of style.
+
+Perfect for birthday parties, school events, college fests, exhibitions, and corporate gatherings, this station offers an engaging experience and a valuable take-home gift that guests will cherish long after the event.
+
+Interactive. Creative. Memorable.
+Not just an activity - an experience you can wear.`,
     image: '/Kids-art/jacketprint.webp',
     categories: [Category.KIDS, Category.CORPORATE_ADULT]
   },
   {
     id: 'ocean-art',
     title: 'Ocean Art Workshop',
-    description: 'Create your own calming coastal masterpiece. Turn an MDF base into a realistic seaside scene using acrylic colours, clay, shells, moss, and natural textures. Add an optional resin finish for a stunning glassy wave effect.This hands-on mixed-media activity combines painting, sculpting, and design in one immersive experience. Perfect for kids workshops, birthdays, family sessions, school events, hobby classes, and adult resin workshops.Ocean Art builds creativity, focus, sensory development, and design skills while creating a beautiful display-ready artwork inspired by the sea.',
+    description: `Ocean Art - Create Your Own Coastal Masterpiece
+
+Step into a calming coastal world and build your own ocean landscape from scratch. Ocean Art is a hands-on, mixed-media art activity where guests transform an MDF base into a realistic seaside scene using acrylic colours, clay, shells, moss, and natural textures.
+
+For adults and teens, we also offer a resin finish that creates a stunning, glassy water effect - just like real waves washing ashore.
+
+This is not just painting. It is sculpting, layering, designing, and storytelling through textures inspired by the sea.
+
+Why Everyone Loves Ocean Art
+Immersive and calming coastal theme that sparks creativity
+Mixed-media exploration with clay, shells, moss, and acrylics
+Educational for kids through sensory play, fine motor skills, and imagination
+Premium resin option for adults for a realistic ocean-water look
+Take-home masterpiece ready to display as decor
+
+Perfect For
+Kids' creative workshops and birthday activities
+Family art sessions
+School events and hobby classes
+Adult art experiences and resin workshops
+Festive booths, exhibitions, and activity corners
+
+Learning Meets Fun (Especially for Kids)
+Ocean Art encourages sensory development through textures
+Patience and focus through layering techniques
+Creative thinking and design skills
+Awareness of marine elements and coastal landscapes
+
+It is art, craft, and learning - beautifully blended.
+
+Let your guests feel the sea, shape the shore, and paint the waves - one texture at a time.`,
     image: '/Kids-art/oceanart.webp',
     categories: [Category.KIDS, Category.CORPORATE_ADULT]
   },
   {
     id: 'keychain',
     title: 'Keychain Workshop',
-    description: 'Add a touch of creativity to your event with our Keychain Making station. We provide wooden initial cutouts, charms, hangings, pearls, tassels, and embellishments so guests can design a custom keychain. This simple, hands-on, and mess-free activity is suitable for all ages and creates a personalised, practical keepsake that guests can use every day. Ideal for parties, school events, workshops, exhibitions, and corporate gatherings.',
+    description: `Add a touch of creativity to your event with our Keychain Making activity station. We bring beautifully crafted wooden initial cutouts for every guest, along with a delightful assortment of charms, hangings, pearls, tassels, and embellishments to design their own custom keychain.
+
+Simple, hands-on, and mess-free, this activity lets guests of all ages create a personalised accessory they can use every day. Each keychain becomes a unique keepsake - thoughtful, fun to make, and practical to carry.
+
+Perfect for parties, school events, workshops, exhibitions, and corporate gatherings, this station offers an engaging experience and a budget-friendly take-home gift your guests will love.
+
+Creative. Personal. Useful.`,
     image: '/Kids-art/keychain.webp',
     categories: [Category.KIDS, Category.RETURN_GIFTS]
   },
   {
     id: 'decoden',
     title: 'Decoden Art Workshop',
-    description: 'Decoden Art (Fake Whipped Cream Art) is a joyful hands-on activity where guests pipe colourful acrylic cream-like paste onto items like hairbrushes, jewellery boxes, phone covers, and more. After creating swirls and textured bases, they decorate with cute charms, glitters, pearls, and embellishments to make a dazzling personalised keepsake. Perfect for kids, teens, and adults at birthday parties, school events, exhibitions, festive gatherings, and corporate workshops.',
+    description: `Decoden Art (Fake Whipped Cream Art) - Pipe, Decorate, Dazzle!
+
+Welcome to the world of Decoden Art, popularly loved as Fake Whipped Cream Art - a delightful, eye-catching craft where creativity literally gets piped onto your favourite accessories.
+
+Using a special acrylic whipped-cream-like paste in multiple theme colours, guests decorate an item of their choice - be it a hairbrush, jewellery box, phone cover, and more. The fun begins as they pipe the "cream" in swirls, waves, and dollops, creating a dreamy textured base. Then comes the best part: choosing from our adorable collection of charms, glitters, pearls, and embellishments to bring their design to life.
+
+This activity is incredibly engaging for kids, teens, and adults alike. It's hands-on, visually exciting, easy to do, and results in a stunning, personalised product guests can proudly take home as a return gift they'll actually use.
+
+Perfect for birthday parties, school events, exhibitions, festive gatherings, and corporate workshops, Decoden Art adds colour, charm, and a whole lot of fun to any celebration.
+
+Pipe it. Patch it. Personalise it. Take it home.
+
+Why This Activity Is a Crowd Favourite
+Unique whipped cream piping experience with colourful acrylic paste
+Choice of base items like phone covers, hairbrushes, jewellery boxes, and more
+Huge variety of cute charms, glitters, and pearls
+Suitable and exciting for all age groups
+A beautiful, usable return gift made by the guests themselves`,
     image: '/Kids-art/decoden.webp',
     categories: [Category.KIDS, Category.CORPORATE_ADULT]
   },
   {
     id: 'clay-nameplate',
     title: 'Clay Nameplate Workshop',
-    description: 'Turn a simple board into a personalised piece of art. In this Clay Nameplate workshop, participants paint an MDF base, mold colourful clay into raised 3D elements (flowers, bees, fruits, leaves, and more), and finish with a wooden name cutout. Suitable for kids, teens, and adults (difficulty adjusted by age), this hands-on activity builds creativity, focus, and fine motor skills while creating a ready-to-hang keepsake for home or room decor.',
+    description: `Turn a simple board into a personalized piece of art. Clay Nameplate Art is a joyful, hands-on activity where kids and adults design their very own nameplate on an MDF base using acrylic colours and bright, moldable clay.
+
+From flowers and honeybees to fruits, leaves, and playful patterns, participants shape tiny clay elements, paint vibrant backgrounds, and finish their artwork with wooden name cutouts we provide. The result is a beautiful, customized nameplate they can proudly take home and display.
+
+What Makes This Activity Special
+Paint, mold, and decorate on a sturdy MDF base
+Use colorful clay to create fun, raised 3D designs
+Add wooden name cutouts for a personalized finish
+Take-home artwork that becomes room or door decor
+Suitable for kids, teens, and adults, with difficulty adjusted by age
+
+Perfect For
+Birthday parties and return gifts that are meaningful
+School workshops and hobby classes
+Family art sessions
+Events, exhibitions, and creative corners
+Adult DIY craft sessions for unique home nameplates
+
+Learning Through Creativity (Great for Kids)
+This activity helps children improve fine motor skills through clay molding
+Explore colors, textures, and composition
+Express creativity while making something personal
+Build focus and patience in a fun way`,
     image: '/Kids-art/clay.webp',
     categories: [Category.KIDS, Category.ALL]
   },

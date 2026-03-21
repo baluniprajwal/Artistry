@@ -1,10 +1,13 @@
-import React, { useEffect, useRef } from 'react';
-import { Camera, ArrowRight, Instagram } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { ArrowLeft, ArrowRight, Instagram } from 'lucide-react';
 
 const Gallery: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const row1Ref = useRef<HTMLDivElement>(null);
   const row2Ref = useRef<HTMLDivElement>(null);
+  const manualOffsetRef = useRef(0);
+  const [manualOffset, setManualOffset] = useState(0);
+  const [offsetBounds, setOffsetBounds] = useState({ min: -720, max: 0 });
 
   const galleryImages = [
     '/Gallery/gallery1.webp',
@@ -52,44 +55,67 @@ const Gallery: React.FC = () => {
   const displayRow1 = [...row1Images, ...row1Images, ...row1Images];
   const displayRow2 = [...row2Images, ...row2Images, ...row2Images];
 
+  const applyTransforms = (scrollY: number, offset = manualOffsetRef.current) => {
+    if (!row1Ref.current || !row2Ref.current) return;
+
+    const speed1 = 0.15;
+    const speed2 = 0.12;
+    const x1 = -(scrollY * speed1) + offset;
+    const x2 = (scrollY * speed2) - 600 + offset;
+
+    row1Ref.current.style.transform = `translate3d(${x1}px, 0, 0)`;
+    row2Ref.current.style.transform = `translate3d(${x2}px, 0, 0)`;
+  };
+
   useEffect(() => {
+    const updateBounds = () => {
+      if (!sectionRef.current || !row1Ref.current) return;
+
+      const totalWidth = row1Ref.current.scrollWidth;
+      const visibleWidth = sectionRef.current.clientWidth;
+      const maxTravel = Math.max(0, totalWidth - visibleWidth - 48);
+      const boundedTravel = Math.min(maxTravel, totalWidth / 3);
+
+      setOffsetBounds({
+        min: -boundedTravel,
+        max: 0,
+      });
+    };
+
     let animationFrameId: number;
 
     const handleScroll = () => {
         if (!sectionRef.current || !row1Ref.current || !row2Ref.current) return;
         
-        // We calculate movement based on window scroll position relative to the section top for better control
-        // However, using global scrollY with a lower coefficient provides a consistent "parallax" feel
         const scrollY = window.scrollY;
-        
-        // Speed factors - Reduced for a more subtle, professional glide
-        const speed1 = 0.15;
-        const speed2 = 0.12;
 
-        // Calculate offsets
-        // Row 1: Moves left (negative translateX) as we scroll down
-        const x1 = -(scrollY * speed1);
-        
-        // Row 2: Moves right (positive translateX) as we scroll down
-        // We subtract a balanced offset so it starts positioned correctly
-        const x2 = (scrollY * speed2) - 600;
-
-        // Use requestAnimationFrame for smoother updates
         animationFrameId = requestAnimationFrame(() => {
-            if (row1Ref.current) row1Ref.current.style.transform = `translate3d(${x1}px, 0, 0)`;
-            if (row2Ref.current) row2Ref.current.style.transform = `translate3d(${x2}px, 0, 0)`;
+            applyTransforms(scrollY);
         });
     };
 
-    // Initial calculation
+    updateBounds();
     handleScroll();
-
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', updateBounds);
     return () => {
         window.removeEventListener('scroll', handleScroll);
+        window.removeEventListener('resize', updateBounds);
         cancelAnimationFrame(animationFrameId);
     };
   }, []);
+
+  const nudgeGallery = (direction: 'left' | 'right') => {
+    const delta = direction === 'left' ? 180 : -180;
+    const nextOffset = Math.min(offsetBounds.max, Math.max(offsetBounds.min, manualOffsetRef.current + delta));
+
+    manualOffsetRef.current = nextOffset;
+    setManualOffset(nextOffset);
+    applyTransforms(window.scrollY, nextOffset);
+  };
+
+  const isAtLeftEnd = manualOffset >= offsetBounds.max;
+  const isAtRightEnd = manualOffset <= offsetBounds.min;
 
   return (
     <section id="gallery" ref={sectionRef} className="py-16 md:py-32 bg-white overflow-hidden relative border-t-2 border-art-text">
@@ -108,11 +134,33 @@ const Gallery: React.FC = () => {
                  </p>
             </div>
             
-            <a href="https://www.instagram.com/artistrybysonamgupta/" target="_blank" rel="noreferrer" className="hidden md:flex items-center gap-2 px-6 py-3 bg-art-text text-white rounded-full font-bold hover:bg-art-green hover:text-art-text transition-all shadow-quirky-sm hover:translate-y-[2px] hover:shadow-none">
-                <Instagram size={20}/> View All on Instagram
-            </a>
+            <div className="flex items-center gap-3">
+                <a href="https://www.instagram.com/artistrybysonamgupta/" target="_blank" rel="noreferrer" className="hidden md:flex items-center gap-2 px-6 py-3 bg-art-text text-white rounded-full font-bold hover:bg-art-green hover:text-art-text transition-all shadow-quirky-sm hover:translate-y-[2px] hover:shadow-none">
+                    <Instagram size={20}/> View All on Instagram
+                </a>
+            </div>
          </div>
       </div>
+
+      <button
+        type="button"
+        aria-label="Scroll gallery left"
+        onClick={() => nudgeGallery('left')}
+        disabled={isAtLeftEnd}
+        className="absolute left-3 md:left-4 lg:left-6 top-1/2 md:top-[54%] -translate-y-1/2 z-20 w-11 h-11 md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-full border-2 border-art-text bg-white/95 text-art-text flex items-center justify-center shadow-lg hover:bg-art-text hover:text-white transition-colors disabled:opacity-35 disabled:hover:bg-white/95 disabled:hover:text-art-text disabled:cursor-not-allowed"
+      >
+        <ArrowLeft size={20} />
+      </button>
+
+      <button
+        type="button"
+        aria-label="Scroll gallery right"
+        onClick={() => nudgeGallery('right')}
+        disabled={isAtRightEnd}
+        className="absolute right-3 md:right-4 lg:right-6 top-1/2 md:top-[54%] -translate-y-1/2 z-20 w-11 h-11 md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-full border-2 border-art-text bg-white/95 text-art-text flex items-center justify-center shadow-lg hover:bg-art-text hover:text-white transition-colors disabled:opacity-35 disabled:hover:bg-white/95 disabled:hover:text-art-text disabled:cursor-not-allowed"
+      >
+        <ArrowRight size={20} />
+      </button>
 
       {/* SCROLL LINKED FILM STRIPS */}
       <div className="flex flex-col gap-8 md:gap-12 py-6 md:py-10">
@@ -166,9 +214,22 @@ const Gallery: React.FC = () => {
 
       </div>
       
-      <div className="text-center mt-16 md:hidden relative z-20">
-         <a href="https://www.instagram.com/artistrybysonamgupta/" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-art-text font-bold border-b-2 border-art-text pb-1 hover:text-art-green hover:border-art-green transition-colors pointer-events-auto">
-            <Camera size={20}/> See more on Instagram <ArrowRight size={16}/>
+      <div className="px-4 mt-14 md:hidden relative z-20">
+         <a
+            href="https://www.instagram.com/artistrybysonamgupta/"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="View more on Instagram"
+            className="pointer-events-auto mx-auto flex w-full max-w-sm items-center justify-center gap-3 rounded-2xl border-2 border-art-text bg-white px-5 py-4 text-art-text shadow-quirky-sm"
+         >
+            <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#E1306C] text-white border border-art-text/10">
+              <Instagram size={22} />
+            </span>
+            <span className="text-left">
+              <span className="block font-quirky text-base font-bold uppercase tracking-wide">View More on Instagram</span>
+              <span className="block text-sm font-sans text-art-text/70">@artistrybysonamgupta</span>
+            </span>
+            <ArrowRight size={18} className="shrink-0" />
          </a>
       </div>
     </section>

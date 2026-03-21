@@ -23,7 +23,7 @@ const AboutUs: React.FC = () => {
                 <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full border border-art-text/10 bg-white shadow-quirky-sm mb-12 transform -rotate-2 hover:rotate-0 transition-transform cursor-default">
                     <span className="w-2 h-2 rounded-full bg-art-green animate-pulse"></span>
                     <span className="font-quirky text-xs font-bold tracking-[0.2em] uppercase text-art-text/60">
-                        Est. 2024 • New Delhi
+                        Est. 2018 • New Delhi
                     </span>
                 </div>
                 

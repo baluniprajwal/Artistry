@@ -1,12 +1,12 @@
 import React from 'react';
 import { CORPORATE_ADULT_GALLERY_IMAGES, HAMPER_GALLERY_IMAGES, RESIN_GALLERY_IMAGES, RETURN_GIFT_GALLERY_IMAGES, WORKSHOPS } from '../constants';
-import { Category } from '../types';
+import { Category, Workshop } from '../types';
 import { ArrowLeft, ArrowUpRight, Star, Heart, Palette, Gift, Briefcase, PartyPopper, ArrowDown } from 'lucide-react';
 
 interface WorkshopGridProps {
     category: Category;
     onBack: () => void;
-    onBook: () => void;
+    onViewWorkshop: (workshop: Workshop) => void;
 }
 
 // Configuration for each Category Landing Page
@@ -110,7 +110,17 @@ const splitIntoColumns = (items: GalleryItem[], columnCount: number): GalleryIte
   return columns;
 };
 
-const WorkshopGrid: React.FC<WorkshopGridProps> = ({ category, onBack, onBook }) => {
+const getShortDescription = (description: string) => {
+  const compact = description.replace(/\s+/g, ' ').trim();
+  if (compact.length <= 150) return compact;
+
+  const firstSentence = compact.match(/^.*?[.!?](?:\s|$)/)?.[0]?.trim();
+  if (firstSentence && firstSentence.length <= 150) return firstSentence;
+
+  return `${compact.slice(0, 147).trimEnd()}...`;
+};
+
+const WorkshopGrid: React.FC<WorkshopGridProps> = ({ category, onBack, onViewWorkshop }) => {
   const theme = CATEGORY_THEMES[category] || CATEGORY_THEMES[Category.ALL];
   
   const filteredWorkshops = category === Category.ALL 
@@ -313,15 +323,24 @@ const WorkshopGrid: React.FC<WorkshopGridProps> = ({ category, onBack, onBook })
                     </>
                 ) : (
                     // CARD VIEW (Original style for Kids, Resin, All)
-                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 md:gap-6">
                         {filteredWorkshops.map((workshop, idx) => (
                             <div 
                                 key={workshop.id} 
-                                className="group flex flex-col h-full bg-[#fffdf9] rounded-[2rem] border border-art-text/10 shadow-[0_10px_30px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_40px_rgba(0,0,0,0.10)] hover:-translate-y-1 transition-all duration-300 overflow-hidden relative"
+                                role="button"
+                                tabIndex={0}
+                                onClick={() => onViewWorkshop(workshop)}
+                                onKeyDown={(event) => {
+                                  if (event.key === 'Enter' || event.key === ' ') {
+                                    event.preventDefault();
+                                    onViewWorkshop(workshop);
+                                  }
+                                }}
+                                className="group flex flex-col h-full bg-[#fffdf9] rounded-[2rem] border border-art-text/10 shadow-[0_10px_30px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_40px_rgba(0,0,0,0.10)] hover:-translate-y-1 transition-all duration-300 overflow-hidden relative cursor-pointer focus:outline-none focus:ring-2 focus:ring-art-text/20"
                                 style={{ transitionDelay: `${idx * 50}ms` }}
                             >
                                 {/* Image Area */}
-                                <div className="aspect-[4/5] w-full overflow-hidden relative bg-art-beige/30">
+                                <div className="aspect-[5/6] w-full overflow-hidden relative bg-art-beige/30">
                                     <img 
                                         src={workshop.image} 
                                         alt={workshop.title} 
@@ -333,24 +352,27 @@ const WorkshopGrid: React.FC<WorkshopGridProps> = ({ category, onBack, onBook })
                                 </div>
 
                                 {/* Content Area */}
-                                <div className="flex-1 p-5 md:p-6 flex flex-col relative">
-                                    <div className="mb-5 pt-1">
-                                        <h3 className="text-xl md:text-2xl font-serif font-bold text-art-text mb-3 leading-tight group-hover:text-art-green-dark transition-colors">
+                                <div className="flex-1 p-4 md:p-5 flex flex-col relative">
+                                    <div className="mb-4 pt-1">
+                                        <h3 className="text-lg md:text-xl font-serif font-bold text-art-text mb-2.5 leading-tight group-hover:text-art-green-dark transition-colors">
                                             {workshop.title}
                                         </h3>
-                                        <p className="text-art-text/70 text-sm leading-relaxed font-sans">
-                                            {workshop.description}
+                                        <p className="text-art-text/70 text-[13px] md:text-sm leading-relaxed font-sans">
+                                            {category === Category.KIDS ? getShortDescription(workshop.description) : workshop.description}
                                         </p>
                                     </div>
 
                                     {/* Features / Meta */}
                                     <div className="mt-auto">
-                                        <button 
-                                            onClick={onBook} 
-                                            className="w-full py-3.5 rounded-xl font-bold font-quirky text-sm uppercase tracking-widest bg-art-text text-white hover:bg-art-green hover:text-art-text transition-all duration-300 flex items-center justify-center gap-2 border-2 border-art-text"
+                                        <button
+                                            onClick={(event) => {
+                                              event.stopPropagation();
+                                              onViewWorkshop(workshop);
+                                            }}
+                                            className="w-full py-3 rounded-xl font-bold font-quirky text-xs md:text-sm uppercase tracking-[0.18em] bg-art-text text-white hover:bg-art-green hover:text-art-text transition-all duration-300 flex items-center justify-center gap-2 border-2 border-art-text"
                                         >
-                                            <span>Request Quote</span>
-                                            <ArrowUpRight size={16} className="group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform"/>
+                                            <span>View Details</span>
+                                            <ArrowUpRight size={16} />
                                         </button>
                                     </div>
                                 </div>
