@@ -122,8 +122,8 @@ interface InteractiveBlock {
   textColor: string;
 }
 
-const splitIntoColumns = (items: GalleryCard[], columnCount: number): GalleryCard[][] => {
-  const columns: GalleryCard[][] = Array.from({ length: columnCount }, () => []);
+const splitIntoColumns = <T,>(items: T[], columnCount: number): T[][] => {
+  const columns: T[][] = Array.from({ length: columnCount }, () => []);
   items.forEach((item, index) => {
     columns[index % columnCount].push(item);
   });
@@ -178,6 +178,12 @@ const CATEGORY_NOTES: Record<Category, GalleryNote[]> = {
     { key: 'return-4', type: 'quote', title: 'Memorable Takeaway', text: 'The goal is a takeaway guests actually keep, use, and remember after the event ends.' },
   ],
 };
+
+const CORPORATE_PARTNERS = [
+  { name: 'Wellbeing Nutrition', src: '/Corporate-adults/wellbeing.jpeg' },
+  { name: 'Mars Cosmetics', src: '/Corporate-adults/mars.jpeg' },
+  { name: 'Radisson Blu Hotel', src: '/Corporate-adults/radisson.jpeg' },
+];
 
 const buildInteractiveBlocks = (category: Category, notes: GalleryNote[]): InteractiveBlock[] => {
   const palette: Record<Category, { bgColor: string; textColor: string }[]> = {
@@ -406,7 +412,7 @@ const WorkshopGrid: React.FC<WorkshopGridProps> = ({ category, onBack, onViewWor
                         <p className="text-base md:text-lg text-art-text/70 leading-relaxed font-light mb-8 md:mb-10 max-w-xl">
                             {theme.description}
                         </p>
-                        
+
                         <button onClick={() => document.getElementById('grid-start')?.scrollIntoView({ behavior: 'smooth' })} className="hidden lg:flex w-14 h-14 rounded-full border-2 border-art-text/70 bg-white/70 backdrop-blur-sm items-center justify-center hover:bg-art-text hover:text-white hover:border-art-text transition-all animate-bounce">
                                 <ArrowDown size={24}/>
                         </button>
@@ -431,6 +437,54 @@ const WorkshopGrid: React.FC<WorkshopGridProps> = ({ category, onBack, onViewWor
                 </div>
             </div>
         </header>
+
+        {category === Category.CORPORATE_ADULT && (
+            <section className="px-3 sm:px-4 lg:px-4 relative z-10 pb-4 md:pb-6">
+                <div className="max-w-[96rem] mx-auto">
+                    <div className="rounded-[2.25rem] border border-art-text/10 bg-white px-5 py-6 md:px-8 md:py-7 shadow-[0_12px_28px_rgba(0,0,0,0.05)]">
+                        <div className="mx-auto max-w-5xl text-center">
+                            <span className="inline-flex items-center gap-3 rounded-full border-2 border-art-text/10 bg-white px-5 py-2.5 font-quirky font-bold text-[10px] uppercase tracking-[0.28em] text-art-text/60 mb-5">
+                                <span className="h-2.5 w-2.5 rounded-full bg-art-gold border border-art-text/10"></span>
+                                Trusted By
+                            </span>
+                            <h3 className="text-3xl md:text-5xl lg:text-[3.6rem] font-serif font-bold text-art-text leading-[0.98] mb-5">
+                                Creative Work Backed By
+                                <span className="block italic text-[#5C667A]">Strong Brand Trust</span>
+                            </h3>
+                            <p className="text-base md:text-lg text-art-text/70 leading-relaxed max-w-3xl mx-auto">
+                                With trusted partners like Wellbeing Nutrition, Mars Cosmetics, Radisson Blu Hotel, and many more, our brand is associated with trust, quality, and above all, creative ideas that reflect the soul of the company.
+                            </p>
+                        </div>
+
+                        <div className="mt-4 md:mt-5 pt-1">
+                            <div className="mx-auto h-px w-full max-w-3xl bg-gradient-to-r from-transparent via-art-text/10 to-transparent"></div>
+                            <div className="mt-3 md:mt-4 flex flex-wrap items-center justify-center gap-10 md:gap-14 lg:gap-20">
+                                {CORPORATE_PARTNERS.map((partner) => (
+                                    <div
+                                        key={partner.name}
+                                        aria-label={partner.name}
+                                        className="flex items-center justify-center px-2 py-2"
+                                    >
+                                        <img
+                                            src={partner.src}
+                                            alt=""
+                                            width={180}
+                                            height={80}
+                                            className={`w-auto object-contain ${
+                                                partner.name === 'Wellbeing Nutrition'
+                                                    ? 'max-h-20 md:max-h-24'
+                                                    : 'max-h-16 md:max-h-20'
+                                            }`}
+                                            loading="lazy"
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        )}
 
         {/* 2. THE CONTENT GRID */}
         <div id="grid-start" className="bg-white rounded-t-[2.5rem] md:rounded-t-[4rem] border-t-2 border-art-text/10 py-16 md:py-24 px-3 sm:px-4 lg:px-4 relative z-20 shadow-[0_-20px_40px_rgba(0,0,0,0.02)]">

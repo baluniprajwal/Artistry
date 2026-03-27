@@ -137,24 +137,24 @@ const Hero: React.FC<HeroProps> = ({ onCtaClick, onExploreClick }) => {
               accessible and unforgettable.
             </p>
 
-            <div className="flex flex-wrap gap-4 sm:gap-6 items-center">
+            <div className="flex flex-nowrap gap-3 sm:gap-6 items-center">
               <button
                 onClick={onCtaClick}
-                className="cursor-pointer group relative bg-art-text text-white px-6 sm:px-10 py-3.5 sm:py-5 rounded-full font-bold font-quirky text-base sm:text-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all flex items-center gap-3 sm:gap-4 overflow-hidden border-2 border-art-text"
+                className="cursor-pointer group relative min-w-0 flex-1 bg-art-text text-white px-4 sm:px-10 py-3.5 sm:py-5 rounded-full font-bold font-quirky text-sm sm:text-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all flex items-center justify-center gap-2 sm:gap-4 overflow-hidden border-2 border-art-text"
               >
                 <span className="relative z-10">Start Creating</span>
                 <div className="bg-white/20 rounded-full p-1.5 relative z-10 group-hover:rotate-45 transition-transform duration-300">
-                  <ArrowRight size={20} />
+                  <ArrowRight size={18} />
                 </div>
                 <div className="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500 ease-out"></div>
-                <span className="absolute inset-0 z-10 flex items-center justify-center text-art-text font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none gap-4 pl-8">
+                <span className="absolute inset-0 z-10 hidden sm:flex items-center justify-center text-art-text font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none gap-4 pl-8">
                   Start Creating <ArrowRight size={20} />
                 </span>
               </button>
 
               <button
                 onClick={onExploreClick}
-                className="cursor-pointer group flex items-center gap-3 px-6 sm:px-8 py-3.5 sm:py-5 rounded-full font-bold font-serif italic text-base sm:text-xl text-art-text hover:bg-white/30 transition-all border-2 border-art-text/20 hover:border-art-text relative bg-white/10 backdrop-blur-sm"
+                className="cursor-pointer group min-w-0 flex-1 flex items-center justify-center gap-2 px-4 sm:px-8 py-3.5 sm:py-5 rounded-full font-bold font-serif italic text-sm sm:text-xl text-art-text hover:bg-white/30 transition-all border-2 border-art-text/20 hover:border-art-text relative bg-white/10 backdrop-blur-sm"
               >
                 <span>View Gallery</span>
               </button>
