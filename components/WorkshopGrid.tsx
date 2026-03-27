@@ -1,7 +1,7 @@
 import React from 'react';
 import { CORPORATE_ADULT_GALLERY_IMAGES, HAMPER_GALLERY_IMAGES, RESIN_GALLERY_IMAGES, RETURN_GIFT_GALLERY_IMAGES, WORKSHOPS } from '../constants';
 import { Category, Workshop } from '../types';
-import { ArrowLeft, ArrowUpRight, Star, Heart, Palette, Gift, Briefcase, PartyPopper, ArrowDown } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, Star, Heart, Palette, Gift, Briefcase, PartyPopper, ArrowDown, Circle, Images, Instagram, MessageCircle } from 'lucide-react';
 
 interface WorkshopGridProps {
     category: Category;
@@ -102,8 +102,28 @@ interface GalleryItem {
   alt: string;
 }
 
-const splitIntoColumns = (items: GalleryItem[], columnCount: number): GalleryItem[][] => {
-  const columns: GalleryItem[][] = Array.from({ length: columnCount }, () => []);
+interface GalleryNote {
+  key: string;
+  type?: 'quote' | 'fact';
+  title: string;
+  text: string;
+}
+
+type GalleryCard =
+  | { type: 'image'; key: string; src: string; alt: string }
+  | { type: 'note'; key: string; title: string; text: string };
+
+interface InteractiveBlock {
+  id: string;
+  type: 'quote' | 'fact';
+  text: string;
+  author?: string;
+  bgColor: string;
+  textColor: string;
+}
+
+const splitIntoColumns = (items: GalleryCard[], columnCount: number): GalleryCard[][] => {
+  const columns: GalleryCard[][] = Array.from({ length: columnCount }, () => []);
   items.forEach((item, index) => {
     columns[index % columnCount].push(item);
   });
@@ -120,8 +140,86 @@ const getShortDescription = (description: string) => {
   return `${compact.slice(0, 147).trimEnd()}...`;
 };
 
+const CATEGORY_NOTES: Record<Category, GalleryNote[]> = {
+  [Category.ALL]: [
+    { key: 'all-1', type: 'fact', title: 'Custom Formats', text: 'Experiences can be adapted for age group, event size, and creative mood.' },
+    { key: 'all-2', type: 'quote', title: 'Hands-On Setup', text: 'Every activity is designed to feel guided, engaging, and easy to enjoy.' },
+    { key: 'all-3', type: 'fact', title: 'Built Around Guests', text: 'The setup is designed to keep guests involved instead of just observing from the side.' },
+    { key: 'all-4', type: 'quote', title: 'Creative Flow', text: 'Each format is paced to feel smooth, interactive, and visually memorable through the event.' },
+  ],
+  [Category.KIDS]: [
+    { key: 'kids-1', type: 'fact', title: 'Made For Kids', text: 'Safe, guided, and playful formats that keep little hands engaged.' },
+    { key: 'kids-2', type: 'quote', title: 'Take Home Joy', text: 'Each activity ends with a keepsake children are proud to carry back.' },
+    { key: 'kids-3', type: 'fact', title: 'Mess With Structure', text: 'Activities stay fun and expressive while still being easy for the team to manage.' },
+    { key: 'kids-4', type: 'quote', title: 'Best For Parties', text: 'A strong fit for birthdays, school workshops, hobby corners, and creative celebrations.' },
+  ],
+  [Category.RESIN]: [
+    { key: 'resin-1', type: 'fact', title: 'Gloss & Detail', text: 'A premium format focused on finish, texture, and elevated presentation.' },
+    { key: 'resin-2', type: 'quote', title: 'Best For', text: 'Luxury gifting, statement decor, preservation pieces, and curated events.' },
+    { key: 'resin-3', type: 'fact', title: 'Premium Finish', text: 'The final output feels polished, durable, and display-ready rather than temporary craft.' },
+    { key: 'resin-4', type: 'quote', title: 'Visual Impact', text: 'These pieces work especially well when you want the gallery to look rich and high-end.' },
+  ],
+  [Category.HAMPERS]: [
+    { key: 'hamper-1', type: 'fact', title: 'Thoughtfully Packed', text: 'Curated hampers that feel polished, useful, and ready to gift.' },
+    { key: 'hamper-2', type: 'quote', title: 'Flexible Themes', text: 'Colors, contents, and styling can be tailored to the occasion.' },
+    { key: 'hamper-3', type: 'fact', title: 'Styled To Gift', text: 'Presentation matters here, so the packs are designed to feel complete and intentional.' },
+    { key: 'hamper-4', type: 'quote', title: 'Good For Bulk Orders', text: 'Useful for festive gifting, custom events, client packs, and curated return gifts.' },
+  ],
+  [Category.CORPORATE_ADULT]: [
+    { key: 'corp-1', type: 'fact', title: 'Built For Adults', text: 'Creative sessions that feel relaxed, premium, and easy to host.' },
+    { key: 'corp-2', type: 'quote', title: 'Works Well At', text: 'Team events, launches, private gatherings, and employee engagement days.' },
+    { key: 'corp-3', type: 'fact', title: 'Low Friction Setup', text: 'Designed to fit professional environments without making the experience feel stiff.' },
+    { key: 'corp-4', type: 'quote', title: 'Shared Experience', text: 'A good choice when you want conversation, participation, and a stronger event memory.' },
+  ],
+  [Category.RETURN_GIFTS]: [
+    { key: 'return-1', type: 'fact', title: 'Useful Keepsakes', text: 'Gifting options that feel personal instead of generic or disposable.' },
+    { key: 'return-2', type: 'quote', title: 'Easy To Personalise', text: 'Themes and presentation can be tuned to match the event style.' },
+    { key: 'return-3', type: 'fact', title: 'Event Ready', text: 'These formats work well when you need gifting to look presentable and easy to distribute.' },
+    { key: 'return-4', type: 'quote', title: 'Memorable Takeaway', text: 'The goal is a takeaway guests actually keep, use, and remember after the event ends.' },
+  ],
+};
+
+const buildInteractiveBlocks = (category: Category, notes: GalleryNote[]): InteractiveBlock[] => {
+  const palette: Record<Category, { bgColor: string; textColor: string }[]> = {
+    [Category.ALL]: [
+      { bgColor: 'bg-[#FF6B6B]', textColor: 'text-white' },
+      { bgColor: 'bg-art-gold', textColor: 'text-art-text' },
+    ],
+    [Category.KIDS]: [
+      { bgColor: 'bg-[#FF6B6B]', textColor: 'text-white' },
+      { bgColor: 'bg-[#38A169]', textColor: 'text-white' },
+    ],
+    [Category.RESIN]: [
+      { bgColor: 'bg-[#805AD5]', textColor: 'text-white' },
+      { bgColor: 'bg-[#38A169]', textColor: 'text-white' },
+    ],
+    [Category.HAMPERS]: [
+      { bgColor: 'bg-art-gold', textColor: 'text-art-text' },
+      { bgColor: 'bg-[#FF6B6B]', textColor: 'text-white' },
+    ],
+    [Category.CORPORATE_ADULT]: [
+      { bgColor: 'bg-[#5A67D8]', textColor: 'text-white' },
+      { bgColor: 'bg-art-gold', textColor: 'text-art-text' },
+    ],
+    [Category.RETURN_GIFTS]: [
+      { bgColor: 'bg-[#805AD5]', textColor: 'text-white' },
+      { bgColor: 'bg-[#FF6B6B]', textColor: 'text-white' },
+    ],
+  };
+
+  return notes.map((note, index) => ({
+    id: note.key,
+    type: note.type === 'fact' ? 'fact' : 'quote',
+    text: note.text,
+    author: note.title,
+    ...palette[category][index % palette[category].length],
+  }));
+};
+
 const WorkshopGrid: React.FC<WorkshopGridProps> = ({ category, onBack, onViewWorkshop }) => {
   const theme = CATEGORY_THEMES[category] || CATEGORY_THEMES[Category.ALL];
+  const instagramLink = 'https://www.instagram.com/artistrybysonamgupta/';
+  const whatsappLink = 'https://wa.me/message/Y4KIHBXFIBEOA1';
   
   const filteredWorkshops = category === Category.ALL 
     ? WORKSHOPS 
@@ -159,9 +257,118 @@ const WorkshopGrid: React.FC<WorkshopGridProps> = ({ category, onBack, onViewWor
           alt: workshop.title,
         }));
 
-  const mobileColumns = splitIntoColumns(galleryItems, 1);
-  const tabletColumns = splitIntoColumns(galleryItems, 2);
-  const desktopColumns = splitIntoColumns(galleryItems, 3);
+  const interactiveBlocks = buildInteractiveBlocks(category, CATEGORY_NOTES[category] || []);
+  const galleryCards: Array<
+    | { type: 'image'; key: string; src: string; alt: string }
+    | { type: 'interactive'; key: string; block: InteractiveBlock }
+  > = [];
+
+  if (isGalleryView) {
+    let noteIndex = 0;
+    galleryItems.forEach((item, index) => {
+      galleryCards.push({ type: 'image', key: item.key, src: item.src, alt: item.alt });
+      if ((index + 1) % 4 === 0 && noteIndex < interactiveBlocks.length) {
+        const block = interactiveBlocks[noteIndex];
+        galleryCards.push({ type: 'interactive', key: block.id, block });
+        noteIndex += 1;
+      }
+    });
+
+    if (galleryCards.length > 0 && galleryCards[galleryCards.length - 1].type !== 'interactive' && noteIndex < interactiveBlocks.length) {
+      const block = interactiveBlocks[noteIndex];
+      galleryCards.push({ type: 'interactive', key: block.id, block });
+    }
+  }
+
+  const mobileColumns = splitIntoColumns(galleryCards, 2);
+  const tabletColumns = splitIntoColumns(galleryCards, 3);
+  const desktopColumns = splitIntoColumns(galleryCards, 4);
+
+  const renderGalleryCard = (
+    item:
+      | { type: 'image'; key: string; src: string; alt: string }
+      | { type: 'interactive'; key: string; block: InteractiveBlock },
+    compact = false
+  ) => {
+    const rotations = ['-rotate-2', 'rotate-2', '-rotate-1', 'rotate-1', '-rotate-3', 'rotate-3'];
+    const tapeColors = ['bg-red-300/60', 'bg-blue-300/60', 'bg-yellow-300/60', 'bg-green-300/60', 'bg-purple-300/60'];
+    const rotation = rotations[item.key.length % rotations.length];
+    const tape = tapeColors[item.key.length % tapeColors.length];
+
+    if (item.type === 'image') {
+      const tapeColors = ['bg-red-300/60', 'bg-blue-300/60', 'bg-yellow-300/60', 'bg-green-300/60', 'bg-purple-300/60'];
+      const rotations = ['-rotate-2', 'rotate-2', '-rotate-1', 'rotate-1', '-rotate-3', 'rotate-3'];
+      const rotation = rotations[item.key.length % rotations.length];
+      const tape = tapeColors[item.key.length % tapeColors.length];
+
+      return (
+        <div
+          key={item.key}
+          className={`break-inside-avoid relative mb-6 bg-white p-3 ${compact ? 'pb-6' : 'md:p-4 md:pb-10'} shadow-[0_10px_20px_rgba(0,0,0,0.08)] transition-all duration-500 hover:shadow-[0_15px_30px_rgba(0,0,0,0.12)] ${rotation}`}
+        >
+          <div className={`absolute -top-3 left-1/2 h-7 ${compact ? 'w-20' : 'w-24 md:w-28'} -translate-x-1/2 ${tape} rotate-1 z-20 backdrop-blur-sm shadow-sm opacity-80 mix-blend-multiply`}></div>
+          <div className="relative overflow-hidden bg-gray-100 aspect-[4/5] w-full">
+            <img
+              src={item.src}
+              alt={item.alt}
+              width={400}
+              height={500}
+              className="w-full h-full object-cover filter contrast-110 saturate-110"
+              loading="lazy"
+            />
+            <div className="absolute inset-0 bg-[#ff9900] mix-blend-overlay opacity-10 pointer-events-none"></div>
+          </div>
+        </div>
+      );
+    }
+
+    const block = item.block;
+    const noteIcons = [
+      Circle,
+      Star,
+      Heart,
+      theme.icon,
+    ];
+    const BlockIcon = noteIcons[item.key.length % noteIcons.length];
+
+    return (
+      <div
+        key={item.key}
+        className={`group break-inside-avoid relative mb-6 flex flex-col justify-center overflow-hidden border-8 border-white shadow-[0_15px_35px_rgba(0,0,0,0.15)] transition-all duration-500 ${block.bgColor} ${block.textColor} ${rotation} ${compact ? 'p-5' : 'p-6 md:p-8'}`}
+      >
+        <div className={`absolute -top-3 left-1/2 -translate-x-1/2 ${compact ? 'w-20' : 'w-24'} h-8 ${tape} z-20 backdrop-blur-sm mix-blend-multiply`}></div>
+        <div className="absolute -right-8 -top-8 opacity-10 transition-transform duration-700 group-hover:scale-125">
+          <BlockIcon size={compact ? 80 : 110} />
+        </div>
+        <div className="relative z-10">
+          {block.type === 'fact' ? (
+            <>
+              <div className="mb-3 flex items-center gap-2 opacity-85">
+                <BlockIcon size={compact ? 14 : 16} />
+                <span className={`font-quirky font-bold uppercase tracking-[0.22em] ${compact ? 'text-[10px]' : 'text-xs'}`}>
+                  {block.author}
+                </span>
+              </div>
+              <p className={`font-serif font-bold leading-tight ${compact ? 'text-base' : 'text-xl md:text-2xl'}`}>{block.text}</p>
+            </>
+          ) : (
+            <>
+              <div className="mb-2 text-3xl opacity-50 font-serif">"</div>
+              <p className={`font-serif font-bold leading-tight ${compact ? 'text-base' : 'text-xl md:text-2xl'} mb-3`}>
+                {block.text}
+              </p>
+              <div className="flex items-center gap-2 opacity-85">
+                <BlockIcon size={compact ? 12 : 14} />
+                <span className={`font-quirky font-bold uppercase tracking-[0.22em] ${compact ? 'text-[10px]' : 'text-xs'}`}>
+                  {block.author}
+                </span>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className={`min-h-screen ${theme.bgColor} relative font-sans selection:bg-art-text selection:text-white`}>
@@ -242,63 +449,31 @@ const WorkshopGrid: React.FC<WorkshopGridProps> = ({ category, onBack, onViewWor
                 {/* Conditional Layout Rendering */}
                 {isGalleryView ? (
                     <>
-                        <div className="grid grid-cols-1 gap-6 md:hidden">
-                            {mobileColumns[0].map((item) => (
-                                <div
-                                    key={item.key}
-                                    className="relative rounded-2xl overflow-hidden shadow-sm transition-all duration-500"
-                                >
-                                    <img
-                                        src={item.src}
-                                        alt={item.alt}
-                                        width={400}
-                                        height={500}
-                                        className="w-full h-auto object-cover transform transition-transform duration-700"
-                                        loading="lazy"
-                                    />
-                                </div>
-                            ))}
-                        </div>
-
-                        <div className="hidden md:grid lg:hidden grid-cols-2 gap-6">
-                            {tabletColumns.map((column, columnIndex) => (
-                                <div key={`tablet-column-${columnIndex}`} className="space-y-6">
+                        <div className="grid grid-cols-2 gap-3 md:hidden pb-12">
+                            {mobileColumns.map((column, columnIndex) => (
+                                <div key={`mobile-column-${columnIndex}`} className="space-y-0">
                                     {column.map((item) => (
-                                        <div
-                                            key={item.key}
-                                            className="relative rounded-2xl overflow-hidden shadow-sm transition-all duration-500"
-                                        >
-                                            <img
-                                                src={item.src}
-                                                alt={item.alt}
-                                                width={400}
-                                                height={500}
-                                                className="w-full h-auto object-cover transform transition-transform duration-700"
-                                                loading="lazy"
-                                            />
-                                        </div>
+                                        renderGalleryCard(item, true)
                                     ))}
                                 </div>
                             ))}
                         </div>
 
-                        <div className="hidden lg:grid grid-cols-3 gap-6">
-                            {desktopColumns.map((column, columnIndex) => (
-                                <div key={`desktop-column-${columnIndex}`} className="space-y-6">
+                        <div className="hidden md:grid lg:hidden grid-cols-2 gap-6 pb-16">
+                            {tabletColumns.map((column, columnIndex) => (
+                                <div key={`tablet-column-${columnIndex}`} className="space-y-0">
                                     {column.map((item) => (
-                                        <div
-                                            key={item.key}
-                                            className="relative rounded-2xl overflow-hidden shadow-sm transition-all duration-500"
-                                        >
-                                            <img
-                                                src={item.src}
-                                                alt={item.alt}
-                                                width={400}
-                                                height={500}
-                                                className="w-full h-auto object-cover transform transition-transform duration-700"
-                                                loading="lazy"
-                                            />
-                                        </div>
+                                        renderGalleryCard(item)
+                                    ))}
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="hidden lg:grid grid-cols-4 gap-6 pb-20">
+                            {desktopColumns.map((column, columnIndex) => (
+                                <div key={`desktop-column-${columnIndex}`} className="space-y-0">
+                                    {column.map((item) => (
+                                        renderGalleryCard(item)
                                     ))}
                                 </div>
                             ))}
@@ -320,6 +495,7 @@ const WorkshopGrid: React.FC<WorkshopGridProps> = ({ category, onBack, onViewWor
                                 </div>
                             </div>
                         )}
+
                     </>
                 ) : (
                     // CARD VIEW (Original style for Kids, Resin, All)
@@ -378,6 +554,64 @@ const WorkshopGrid: React.FC<WorkshopGridProps> = ({ category, onBack, onViewWor
                                 </div>
                             </div>
                         ))}
+                    </div>
+                )}
+
+                {(isGalleryView || category === Category.KIDS) && (
+                    <div className="mt-12 md:mt-16">
+                        <div className="text-center mb-6 md:mb-8">
+                            <span className="block font-quirky font-bold text-xs uppercase tracking-[0.22em] text-art-text/45 mb-2">
+                                Explore More
+                            </span>
+                            <h3 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-art-text">
+                                Continue The <span className={`${theme.accentColor} italic`}>Journey</span>
+                            </h3>
+                        </div>
+                        <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4">
+                            <a
+                                href="/#gallery"
+                                className="group inline-flex items-center gap-3 sm:gap-4 rounded-full border-2 border-art-text bg-[#FFF1CC] px-6 sm:px-10 py-4 sm:py-5 shadow-quirky transition-all duration-300 hover:-translate-y-1 hover:shadow-quirky-hover"
+                            >
+                                <span className="flex h-11 w-11 items-center justify-center rounded-full border border-art-text bg-[#F8C83C] text-white transition-transform group-hover:rotate-12">
+                                    <Images size={20} />
+                                </span>
+                                <span className="text-left">
+                                    <span className="block font-quirky text-sm sm:text-base font-bold uppercase leading-none text-art-text mb-1">Portfolio</span>
+                                    <span className="block font-sans text-xs sm:text-sm font-bold text-art-text/70">Browse the full gallery</span>
+                                </span>
+                            </a>
+                            <a
+                                href={instagramLink}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="group inline-flex items-center gap-3 sm:gap-4 rounded-full border-2 border-art-text bg-[#FFDCE8] px-6 sm:px-10 py-4 sm:py-5 shadow-quirky transition-all duration-300 hover:-translate-y-1 hover:shadow-quirky-hover"
+                            >
+                                <span className="flex h-11 w-11 items-center justify-center rounded-full border border-art-text bg-[#E1306C] text-white transition-transform group-hover:rotate-12">
+                                    <Instagram size={20} />
+                                </span>
+                                <span className="text-left">
+                                    <span className="block font-quirky text-sm sm:text-base font-bold uppercase leading-none text-art-text mb-1">Instagram</span>
+                                    <span className="block font-sans text-xs sm:text-sm font-bold text-art-text/70">See more captured moments</span>
+                                </span>
+                            </a>
+                            <a
+                                href={whatsappLink}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="group inline-flex items-center gap-3 sm:gap-4 rounded-full border-2 border-art-text bg-[#DDF7E5] px-6 sm:px-10 py-4 sm:py-5 shadow-quirky transition-all duration-300 hover:-translate-y-1 hover:shadow-quirky-hover"
+                            >
+                                <span className="flex h-11 w-11 items-center justify-center rounded-full border border-art-text bg-[#25D366] text-white transition-transform group-hover:rotate-12">
+                                    <svg viewBox="0 0 32 32" className="h-8 w-8 fill-white" aria-hidden="true">
+                                        <path d="M19.11 17.2c-.26-.13-1.52-.75-1.75-.83-.23-.09-.4-.13-.57.13-.17.26-.65.83-.8 1-.15.17-.3.2-.56.07-.26-.13-1.1-.4-2.1-1.28-.78-.69-1.3-1.54-1.45-1.8-.15-.26-.02-.4.11-.53.12-.12.26-.3.39-.45.13-.15.17-.26.26-.43.09-.17.04-.33-.02-.46-.07-.13-.57-1.38-.79-1.89-.21-.5-.42-.43-.57-.44h-.49c-.17 0-.46.06-.7.33-.24.26-.92.9-.92 2.2 0 1.3.94 2.56 1.07 2.73.13.17 1.84 2.8 4.46 3.93.62.27 1.1.43 1.48.55.62.2 1.19.17 1.64.1.5-.08 1.52-.62 1.74-1.21.22-.59.22-1.1.15-1.2-.06-.1-.23-.17-.49-.3z" />
+                                        <path d="M16.02 3.2c-7.07 0-12.8 5.73-12.8 12.8 0 2.25.59 4.45 1.72 6.4L3 29l6.8-1.78a12.74 12.74 0 0 0 6.22 1.6h.01c7.07 0 12.8-5.73 12.8-12.8 0-3.43-1.34-6.66-3.77-9.08a12.69 12.69 0 0 0-9.04-3.74zm0 23.45h-.01a10.6 10.6 0 0 1-5.39-1.47l-.39-.23-4.03 1.06 1.08-3.93-.25-.4a10.62 10.62 0 1 1 8.99 4.97z" />
+                                    </svg>
+                                </span>
+                                <span className="text-left">
+                                    <span className="block font-quirky text-sm sm:text-base font-bold uppercase leading-none text-art-text mb-1">WhatsApp</span>
+                                    <span className="block font-sans text-xs sm:text-sm font-bold text-art-text/70">Chat directly with Sonam</span>
+                                </span>
+                            </a>
+                        </div>
                     </div>
                 )}
                 

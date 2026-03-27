@@ -10,7 +10,7 @@ const Hero: React.FC<HeroProps> = ({ onCtaClick, onExploreClick }) => {
   return (
     <div
       id="home"
-      className="relative bg-art-green min-h-[85vh] flex items-center overflow-hidden pt-32 sm:pt-40 pb-10 lg:pt-0 lg:pb-0"
+      className="relative bg-art-green min-h-screen lg:min-h-[85vh] flex items-center overflow-hidden pt-24 sm:pt-28 pb-6 sm:pb-8 lg:pt-0 lg:pb-0"
     >
       {/* Dynamic Background Blobs */}
       <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-white/20 rounded-full blur-[100px] animate-blob mix-blend-overlay pointer-events-none"></div>
@@ -30,11 +30,11 @@ const Hero: React.FC<HeroProps> = ({ onCtaClick, onExploreClick }) => {
 
       <div className="max-w-[98rem] mx-auto px-4 sm:px-2 lg:px-2 relative z-10 w-full lg:-mt-8">
         {/* ✅ Key: ensure both columns align off the same vertical center on lg */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-center lg:min-h-[800px]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-24 items-center lg:min-h-[800px]">
           {/* Typography Section (Left) */}
           <div className="lg:col-span-7 relative z-20">
             {/* Premium Pill Badge */}
-            <div className="flex flex-wrap items-center gap-4 mb-6 lg:mb-10">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-5 sm:mb-6 lg:mb-10">
               <div className="inline-flex items-center gap-3 bg-art-text/5 backdrop-blur-md px-5 py-2 rounded-full border border-art-text/10 shadow-sm animate-fade-in-up cursor-default hover:scale-105 transition-transform">
                 <span className="flex h-2 w-2 relative">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
@@ -53,9 +53,31 @@ const Hero: React.FC<HeroProps> = ({ onCtaClick, onExploreClick }) => {
               </div>
             </div>
 
+            <div className="mb-6 sm:mb-8 lg:hidden">
+              <div className="relative mx-auto w-full max-w-[16rem] sm:max-w-[20rem]">
+                <div className="overflow-hidden rounded-[2rem] border-[3px] border-art-text bg-white p-2 shadow-2xl">
+                  <div className="overflow-hidden rounded-[1.5rem] aspect-[4/5]">
+                    <img
+                      src="/Corporate-adults/corporate7.webp"
+                      alt="Art Workshop"
+                      width={800}
+                      height={1000}
+                      loading="eager"
+                      fetchPriority="high"
+                      decoding="async"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                </div>
+                <div className="absolute -bottom-4 -right-3 rounded-full border border-art-text bg-white px-3 py-1 text-xs font-bold font-quirky text-art-text shadow-sm rotate-6">
+                  Art In Action
+                </div>
+              </div>
+            </div>
+
             {/* Headline */}
             <h1 className="relative z-10 mb-8 lg:mb-10 select-none">
-              <span className="block text-4xl sm:text-6xl md:text-8xl font-serif font-medium text-art-text leading-[0.95] tracking-tight mb-2 lg:mb-6">
+              <span className="block text-3xl sm:text-5xl md:text-8xl font-serif font-medium text-art-text leading-[0.95] tracking-tight mb-2 lg:mb-6">
                 Don't just{' '}
                 <span className="italic text-white relative inline-block transform hover:skew-x-12 transition-transform duration-500">
                   watch.
@@ -94,7 +116,7 @@ const Hero: React.FC<HeroProps> = ({ onCtaClick, onExploreClick }) => {
                     />
                   </svg>
 
-                  <span className="relative z-10 text-5xl sm:text-7xl md:text-9xl font-quirky font-black text-art-text group-hover:text-white transition-colors duration-300 drop-shadow-sm leading-[0.8]">
+                  <span className="relative z-10 text-4xl sm:text-6xl md:text-9xl font-quirky font-black text-art-text group-hover:text-white transition-colors duration-300 drop-shadow-sm leading-[0.8]">
                     GET MESSY
                   </span>
 
@@ -106,7 +128,7 @@ const Hero: React.FC<HeroProps> = ({ onCtaClick, onExploreClick }) => {
               </div>
             </h1>
 
-            <p className="text-lg md:text-2xl font-sans font-medium max-w-xl leading-relaxed text-art-text/80 mb-8 lg:mb-12">
+            <p className="text-base sm:text-lg md:text-2xl font-sans font-medium max-w-xl leading-relaxed text-art-text/80 mb-6 sm:mb-8 lg:mb-12">
               We curate premium, immersive{' '}
               <span className="font-bold text-art-text border-b-2 border-white">
                 art experiences
@@ -115,10 +137,10 @@ const Hero: React.FC<HeroProps> = ({ onCtaClick, onExploreClick }) => {
               accessible and unforgettable.
             </p>
 
-            <div className="flex flex-wrap gap-6 items-center">
+            <div className="flex flex-wrap gap-4 sm:gap-6 items-center">
               <button
                 onClick={onCtaClick}
-                className="cursor-pointer group relative bg-art-text text-white px-7 sm:px-10 py-4 sm:py-5 rounded-full font-bold font-quirky text-lg sm:text-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all flex items-center gap-3 sm:gap-4 overflow-hidden border-2 border-art-text"
+                className="cursor-pointer group relative bg-art-text text-white px-6 sm:px-10 py-3.5 sm:py-5 rounded-full font-bold font-quirky text-base sm:text-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all flex items-center gap-3 sm:gap-4 overflow-hidden border-2 border-art-text"
               >
                 <span className="relative z-10">Start Creating</span>
                 <div className="bg-white/20 rounded-full p-1.5 relative z-10 group-hover:rotate-45 transition-transform duration-300">
@@ -132,7 +154,7 @@ const Hero: React.FC<HeroProps> = ({ onCtaClick, onExploreClick }) => {
 
               <button
                 onClick={onExploreClick}
-                className="cursor-pointer group flex items-center gap-3 px-8 py-5 rounded-full font-bold font-serif italic text-xl text-art-text hover:bg-white/30 transition-all border-2 border-art-text/20 hover:border-art-text relative bg-white/10 backdrop-blur-sm"
+                className="cursor-pointer group flex items-center gap-3 px-6 sm:px-8 py-3.5 sm:py-5 rounded-full font-bold font-serif italic text-base sm:text-xl text-art-text hover:bg-white/30 transition-all border-2 border-art-text/20 hover:border-art-text relative bg-white/10 backdrop-blur-sm"
               >
                 <span>View Gallery</span>
               </button>
